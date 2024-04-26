@@ -1,5 +1,5 @@
 function [V, I, units] = loadCyclicVoltametry(filename)
-% [t, I, unit] = loadAmperometry(filename)
+% [V, I, units] = loadCyclicVoltametry(filename)
 %% Load amperometry csv data from dropview
 
 % filename = '../2024_01_26/NHcell_CV2_pm1500mV_100mVs_3scans.csv';

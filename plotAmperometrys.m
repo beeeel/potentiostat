@@ -1,4 +1,5 @@
 function [FAout, fh] = plotAmperometrys(dirs, fnames, lC, lSt, nPerSty)
+%% [FAout, fh] = plotAmperometrys(dirs, fnames, [lC, lSt, nPerSty])
 
 if ~exist('lSt','var')
     lSt = {'-','--',':','-.'};
@@ -7,7 +8,7 @@ if ~exist('nPerSty','var')
     nPerSty = 7;
 end
 
-fh = figure(2);
+fh = figure();
 clf
 clear h
 FAout = cell(size(dirs));
@@ -30,7 +31,9 @@ end
 % h(end+1) = plot([1e1 1e6], [1e9 1e4], 'k-');
 % plot([1e-3 1e2], [1e8 1e3], 'k-');
 
-legend(h, lC)
+if exist('lC','var')
+    legend(h, lC)
+end
 xlabel('Time (s)')
 set(gca,'FontSize',16)
 % ylabel('Phase angle (deg)')

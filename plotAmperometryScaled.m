@@ -17,18 +17,32 @@ for dIdx = 1:numel(dirs)
     for fIdx = 1:numel(fnames{dIdx})
         count = count + 1;
         fname = [dirs{dIdx} fnames{dIdx}{fIdx}];
-        [t, I, unit] = loadAmperometry(fname);
+        [t, I, Iunit] = loadAmperometry(fname);
         
         str = strsplit(fname, '_');
         ind = find(endsWith(str, 'V'));
         V = sscanf(str{ind}, '%f');
-        unit = sscanf(str{ind}, 
+        unit = sscanf(str{ind},[num2str(V) '%sV']);
+        switch unit
+            case 'kV'
+                V = 1e3  * V;
+            case 'mV'
+                V = 1e-3 * V;
+            case 'uV'
+                V = 1e-6 * V;
+            case 'nV'
+                V = 1e-9 * V;
+            case 'V'
+            otherwise
+                error('V unit (%s) not recognised from file name...', unit)
+        end
+        
         FAout{dIdx}{fIdx} = [t; I];
         
         
         
 %         yyaxis left
-        h(count) = plot(t, 1e3*I./V,'LineWidth',2, 'LineStyle', lSt{ceil(count/nPerSty)});
+        h(count) = plot(t, I./V,'LineWidth',2, 'LineStyle', lSt{ceil(count/nPerSty)});
         hold on
 %         yyaxis right
 %         semilogx(EIS(1,:), 360/2/pi*angle(EIS(2,:) + 1i * EIS(3,:)))
@@ -43,4 +57,4 @@ set(gca,'FontSize',16)
 % ylabel('Phase angle (deg)')
 % ylim([-90 90])
 % yyaxis left
-ylabel(sprintf('Current over Voltage (nA/V)', unit))
+ylabel(sprintf('Current over Voltage (%s/V)', Iunit))

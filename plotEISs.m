@@ -9,7 +9,7 @@ end
 
 fh = figure(1);
 clf
-fh.Position = [0 37 1890 960];
+% fh.Position = [0 37 1890 960];
 
 EISout = cell(size(dirs));
 count = 0;

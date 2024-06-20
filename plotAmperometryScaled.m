@@ -19,10 +19,11 @@ for dIdx = 1:numel(dirs)
         fname = [dirs{dIdx} fnames{dIdx}{fIdx}];
         [t, I, unit] = loadAmperometry(fname);
         
-        str = strsplit(fname, '_');
+        str = strsplit(fname, {'_', '.'});
         ind = find(endsWith(str, 'V'));
         V = sscanf(str{ind}, '%f');
-        unit = sscanf(str{ind}, 
+        if endsWith(str{ind}, 'mV'); V = 1e-3 * V; end
+        % unit = sscanf(str{ind}, 
         FAout{dIdx}{fIdx} = [t; I];
         
         
